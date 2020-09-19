@@ -33,11 +33,11 @@ class sudoku {
 
   /// @name     print
   /// @brief    打印当前数独
-  /// 
+  ///
   /// @param    NONE
-  /// 
+  ///
   /// @return   NONE
-  /// 
+  ///
   /// @author   Lijiancong, pipinstall@163.com
   /// @date     2020-09-19 21:35:31
   /// @warning  线程不安全
@@ -71,20 +71,21 @@ class sudoku {
 
   /// @name     complete_sudoku
   /// @brief    解决数独
-  /// 
+  ///
   /// @param    NONE
-  /// 
+  ///
   /// @return   NONE
-  /// 
+  ///
   /// @author   Lijiancong, pipinstall@163.com
   /// @date     2020-09-19 21:36:29
   /// @warning  线程不安全
   void complete_sudoku() {
     std::vector<int> temp;
-    std::vector<std::vector<int>> row(9, temp); ///< 保存每行出现过的数字
+    std::vector<std::vector<int>> row(9, temp);  ///< 保存每行出现过的数字
     std::vector<std::vector<int>> column(9, temp);  ///< 保存没列出现过的数字
-    std::vector<std::vector<int>> matrix(9, temp);  ///< 保存每个九宫格出现的数字
-    std::vector<std::pair<int, int>> pos; ///< 保存九宫格中需要填入数字的位置
+    std::vector<std::vector<int>> matrix(9,
+                                         temp);  ///< 保存每个九宫格出现的数字
+    std::vector<std::pair<int, int>> pos;  ///< 保存九宫格中需要填入数字的位置
     for (size_t x = 0; x < board.size(); ++x) {
       for (size_t y = 0; y < board.size(); ++y) {
         if (board.at(x).at(y) != 0) {
@@ -145,7 +146,18 @@ class sudoku {
   }
 
  private:
-  std::vector<std::vector<int>> board;
+  std::vector<std::vector<int>> board;  ///< 数独数据
+
+  /// @name     create
+  /// @brief    创建一个可解的数独，不保证只有唯一解
+  ///
+  /// @param    NONE
+  ///
+  /// @return   NONE
+  ///
+  /// @author   Lijiancong, pipinstall@163.com
+  /// @date     2020-09-19 21:47:08
+  /// @warning  线程不安全
   std::vector<std::vector<int>> create() {
     std::vector<int> temp(9, 0);
     std::vector<std::vector<int>> xx(9, temp);
@@ -157,6 +169,16 @@ class sudoku {
     return board;
   }
 
+  /// @name     create_random
+  /// @brief    创建一到9，九个数字顺序随机
+  ///
+  /// @param    NONE
+  ///
+  /// @return   创建好的vector
+  ///
+  /// @author   Lijiancong, pipinstall@163.com
+  /// @date     2020-09-19 21:48:02
+  /// @warning  线程不安全
   std::vector<int> create_random() {
     static std::random_device rd;
     static std::mt19937 g(rd());
@@ -166,6 +188,16 @@ class sudoku {
     return res;
   }
 
+  /// @name     remove_number
+  /// @brief    在一个合法填满数字的数独上随机挖洞，概率为输入的浮点数。
+  ///
+  /// @param    persent [in]  挖洞的概率, 百分数
+  ///
+  /// @return   NONE
+  ///
+  /// @author   Lijiancong, pipinstall@163.com
+  /// @date     2020-09-19 21:48:52
+  /// @warning  线程不安全
   void remove_number(double persent) {
     auto get_random = []() {
       static std::once_flag InitFlag;
